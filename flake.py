@@ -2,8 +2,19 @@ import pygame, sys
 from pygame.locals import *
 
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((400, 300))
+DISPLAYSURF = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('FlakeMake 0.00a')
+
+WHITE = (255, 255, 255)
+
+origin = (400, 300)
+
+pygame.draw.line(DISPLAYSURF, WHITE, origin, (origin[0] - 50, origin[1]), 4) # left horizontal
+pygame.draw.line(DISPLAYSURF, WHITE, origin, (origin[0] + 50, origin[1]), 4) # right horizontal
+pygame.draw.line(DISPLAYSURF, WHITE, origin, (origin[0], origin[1] - 50), 4) # up vertical
+pygame.draw.line(DISPLAYSURF, WHITE, origin, (origin[0], origin[1] + 50), 4) # down vertical
+
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -58,5 +69,3 @@ while True:
         # some IO stuff I don't know how to do yet!
 
         # draw a line on the screen
-
-        
