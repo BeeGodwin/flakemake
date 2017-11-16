@@ -30,8 +30,13 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == 'a':
+                n += 1
+            elif event.key == 'b':
+                n -= 1
 
-    simple_lines(72, 200)
+    simple_lines(n, 200)
     pygame.display.update()
 
 
