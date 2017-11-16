@@ -68,4 +68,10 @@ while True:
 
         # some IO stuff I don't know how to do yet!
 
-        # draw a line on the screen
+        # draw a line on the screen - easy enough, but we want to draw from
+        # some origin point with a length, so we need to compute our start
+        # and end screen coordinates. (eg if surface dim 800x600 then orig. is
+        # (400, 300) but we might also be taking any point on any branch as orig.)
+        # want to be able to draw with an origin, normalised direction vector
+        # (which I think we can get from the trig functions) and then multiply
+        # that by some length.
