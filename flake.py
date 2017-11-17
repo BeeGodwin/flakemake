@@ -6,6 +6,7 @@ DSURF = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('FlakeMake 0.00a')
 
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 # or more explicitly: WHITE = pygame.Color(255, 255, 255)
 
 ORIGIN = (400, 300)
@@ -23,20 +24,25 @@ def simple_lines(n, l):
         dest = (ORIGIN[0] + x * l, ORIGIN[1] + y * l)
         pygame.draw.line(DSURF, WHITE, ORIGIN, dest, 2)
 
-
+n = 6
+l = 200
 while True:
-    n = 6
+    DSURF.fill(BLACK)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == 'a':
+            if event.key == 97:
                 n += 1
-            elif event.key == 'b':
+            elif event.key == 100:
                 n -= 1
-
-    simple_lines(n, 200)
+            elif event.key == 119:
+                l += 30
+            elif event.key == 115:
+                l -= 30
+    # n += 1
+    simple_lines(n, l)
     pygame.display.update()
 
 

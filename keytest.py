@@ -10,7 +10,5 @@ while 1:
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            print("{0}: You pressed {1:c}".format ( index , event.key ))
-        elif event.type == pygame.KEYUP:
-            print("{0}: You released {1:c}".format ( index , event.key ))
+            print(event.key)
         index += 1
