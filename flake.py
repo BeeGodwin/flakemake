@@ -1,21 +1,6 @@
 import pygame, sys, math
 from pygame.locals import *
 
-pygame.init()
-DSURF = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('FlakeMake 0.00a')
-
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-# or more explicitly: WHITE = pygame.Color(255, 255, 255)
-
-ORIGIN = (400, 300)
-
-# pygame.draw.line(DISPLAYSURF, WHITE, ORIGIN, (ORIGIN[0] - 50, ORIGIN[1]), 4) # left horizontal
-# pygame.draw.line(DISPLAYSURF, WHITE, ORIGIN, (ORIGIN[0] + 50, ORIGIN[1]), 4) # right horizontal
-# pygame.draw.line(DISPLAYSURF, WHITE, ORIGIN, (ORIGIN[0], ORIGIN[1] - 50), 4) # up vertical
-# pygame.draw.line(DISPLAYSURF, WHITE, ORIGIN, (ORIGIN[0], ORIGIN[1] + 50), 4) # down vertical
-
 def simple_lines(n, l):
     '''draws the simplest possible snowflake of n lines of length l.'''
     for i in range(n):
@@ -24,29 +9,40 @@ def simple_lines(n, l):
         dest = (ORIGIN[0] + x * l, ORIGIN[1] + y * l)
         pygame.draw.line(DSURF, WHITE, ORIGIN, dest, 2)
 
-n = 6
-l = 200
-while True:
-    DSURF.fill(BLACK)
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == 97:
-                n += 1
-            elif event.key == 100:
-                n -= 1
-            elif event.key == 119:
-                l += 30
-            elif event.key == 115:
-                l -= 30
-    # n += 1
-    simple_lines(n, l)
-    pygame.display.update()
+def main():
+    pygame.init()
+    DSURF = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption('FlakeMake 0.00a')
 
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    # or more explicitly: WHITE = pygame.Color(255, 255, 255)
 
+    ORIGIN = (400, 300)
 
+    n = 6
+    l = 200
+    while True:
+        DSURF.fill(BLACK)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == 97:
+                    n += 1
+                elif event.key == 100:
+                    n -= 1
+                elif event.key == 119:
+                    l += 30
+                elif event.key == 115:
+                    l -= 30
+        # n += 1
+        simple_lines(n, l)
+        pygame.display.update()
+
+if __name__ == '__main__':
+    main()
 
 # make a snowflake.
 
