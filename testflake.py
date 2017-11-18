@@ -1,1 +1,4 @@
-# set up with pytest and travis, how hard can it be?
+import flakemake
+
+def test_nothing():
+    assert 2 + 2 == 4
