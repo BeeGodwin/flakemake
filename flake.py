@@ -1,20 +1,19 @@
 import pygame, sys, math
 from pygame.locals import *
 
-def simple_lines(n, l):
+def simple_lines(n, l, ORIGIN, DSURF):
     '''draws the simplest possible snowflake of n lines of length l.'''
     for i in range(n):
         x = math.sin(math.radians(i * 360 / n))
         y = math.cos(math.radians(i * 360 / n))
         dest = (ORIGIN[0] + x * l, ORIGIN[1] + y * l)
-        pygame.draw.line(DSURF, WHITE, ORIGIN, dest, 2)
+        pygame.draw.line(DSURF, (255, 255, 255), ORIGIN, dest, 2)
 
 def main():
     pygame.init()
     DSURF = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('FlakeMake 0.00a')
 
-    WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     # or more explicitly: WHITE = pygame.Color(255, 255, 255)
 
@@ -38,7 +37,7 @@ def main():
                 elif event.key == 115:
                     l -= 30
         # n += 1
-        simple_lines(n, l)
+        simple_lines(n, l, ORIGIN, DSURF)
         pygame.display.update()
 
 if __name__ == '__main__':
