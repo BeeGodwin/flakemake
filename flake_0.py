@@ -5,7 +5,7 @@ def simple_lines(n, l, ORIGIN, DSURF):
     '''draws the simplest possible snowflake of n lines of length l.'''
     for i in range(n):
         x = math.sin(math.radians(i * 360 / n))
-        y = math.cos(math.radians(i * 360 / n))
+        y = -math.cos(math.radians(i * 360 / n))
         dest = (ORIGIN[0] + x * l, ORIGIN[1] + y * l)
         pygame.draw.line(DSURF, (255, 255, 255), ORIGIN, dest, 2)
 

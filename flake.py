@@ -1,6 +1,6 @@
 '''FlakeMake 0.01a'''
 import random
-import math
+import math, numpy
 
 class Branch:
     '''recursively constructs one arm of a flake. Seed the RNG before you create
@@ -31,11 +31,21 @@ class Branch:
     def get_angles(self, n):
         '''returns a list of tuples of (x, y) tuples, describing normalised
         vectors of the angles that the branches off this branch will produce.'''
+        # x = round(math.sin(math.radians(i * 360 / n)), 2)
+        # y = round(-math.cos(math.radians(i * 360 / n)), 2)
         # look at vec to get an angle in degrees using arcsin: (0, -1) should be vertical.
         # then work out how many angle pairs there are using n.
         # having worked them out in degrees, convert them back into vectors
         # return them as a list of pairs of tuples
         pass
+
+    def angle(vec):
+        '''given a normalised (x, y) vector, return its angle (with 0 being
+        considered vertical, on a scale 0-359.99.)'''
+        theta = math.degrees(numpy.arctan2(vec[0], -vec[1]))
+        if vec[0] < 0:
+            theta += 360
+        return round(theta, 2)
 
 # def main():
 #     branch = Branch(ori=(0, 0), vec=(-1, 0), leng=200, n=6, dens=10, prob=1)
