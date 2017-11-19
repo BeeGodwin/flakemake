@@ -1,5 +1,6 @@
 import pygame, sys, math
 from pygame.locals import *
+from obj import Tester
 
 def simple_lines(n, l, ORIGIN, DSURF):
     '''draws the simplest possible snowflake of n lines of length l.'''
@@ -16,7 +17,7 @@ def main():
 
     BLACK = (0, 0, 0)
     # or more explicitly: WHITE = pygame.Color(255, 255, 255)
-
+    test = Tester(2, 2, 2)
     ORIGIN = (400, 300)
 
     n = 6
