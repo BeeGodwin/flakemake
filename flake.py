@@ -1,11 +1,12 @@
 '''FlakeMake 0.01a'''
 import random
-import math, numpy
+import math
+import numpy
 
 class Branch:
     '''recursively constructs one arm of a flake. Seed the RNG before you create
     the object if you want branches that look alike.'''
-    def __init__(self, ori, vec, leng, n, dens, prob):
+    def __init__(self, ori=(0, 0), vec=(0, -1), leng=100, n=6, dens=1, prob=1):
         self.ori = ori # (x, y) tuple describing pt on scr
         self.vec = vec # (x, y) tuple describing norm vector
         self.leng = leng # length in pixels
@@ -31,21 +32,29 @@ class Branch:
     def get_angles(self, n):
         '''returns a list of tuples of (x, y) tuples, describing normalised
         vectors of the angles that the branches off this branch will produce.'''
-        # x = round(math.sin(math.radians(i * 360 / n)), 2)
-        # y = round(-math.cos(math.radians(i * 360 / n)), 2)
-        # look at vec to get an angle in degrees using arcsin: (0, -1) should be vertical.
-        # then work out how many angle pairs there are using n.
-        # having worked them out in degrees, convert them back into vectors
-        # return them as a list of pairs of tuples
-        pass
+        my_angle = self.polar(self.vec)
+        pairs = (n - 1) // 2
+        angles = []
+        angle_inc = 360 / n
+        for i in range(pairs):
+            pair = [my_angle + angle_inc * (i + 1), my_angle - angle_inc * (i + 1)]
+            angles.append([self.cartesian(pair[0]), self.cartesian(pair[1])])
+        return angles
 
-    def angle(vec):
+    def polar(self, vec):
         '''given a normalised (x, y) vector, return its angle (with 0 being
         considered vertical, on a scale 0-359.99.)'''
-        theta = math.degrees(numpy.arctan2(vec[0], -vec[1]))
+        phi = math.degrees(numpy.arctan2(vec[0], -vec[1]))
         if vec[0] < 0:
-            theta += 360
-        return round(theta, 2)
+            phi += 360
+        return round(phi, 3)
+
+    def cartesian(self, phi):
+        '''given an angle phi, return a normalised (x, y) vector as a tuple of
+        floats.'''
+        x = round(math.sin(math.radians(phi)), 3)
+        y = -round(math.cos(math.radians(phi)), 3)
+        return (x, y)
 
 # def main():
 #     branch = Branch(ori=(0, 0), vec=(-1, 0), leng=200, n=6, dens=10, prob=1)
