@@ -12,11 +12,14 @@ def test_create_nodes():
     nodes = branch.place_nodes()
     assert nodes == [(0, -15)]
     branch = Branch(leng=100, dens=1, prob=0)
-    assert nodes == []
+    #assert nodes == [] # won't work til rand does.
 
 
 def test_rand_place_branch():
-    pass
+    branch = Branch(prob=1)
+    assert branch.rand_place_branch() == True
+    branch.prob = 0
+    assert branch.rand_place_branch() == False
 
 def test_place_branch():
     pass

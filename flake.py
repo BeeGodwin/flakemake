@@ -14,7 +14,7 @@ class Branch:
         self.prob = prob # 0-1 probability of nodes
         self.angles = self.get_angles(n)
 
-        # for node in self.place_nodes(dens, prob, leng):
+        # for node in self.place_nodes():
         #     if self.rand_place_branch():
         #         self.place_branch(node) # got to place pairs of branches.
 
@@ -22,12 +22,24 @@ class Branch:
         '''returns a list of (x, y) tuples of points along this branch. dens says
         how many pixels apart nodes should be. prob is the likelihood of a given
         node being added to the returned list.'''
-        pass
+        #print('origin {}, vec {}, len {}, density {}, prob {}.'.format(self.ori, self.vec, self.leng, self.dens, self.prob))
+        nodes = []
+        x_gap, y_gap = self.vec[0] * self.dens, self.vec[1] * self.dens
+        node = (self.ori[0] + x_gap, self.ori[1] + y_gap)
+        for i in range((self.leng // self.dens) - 1):
+            if (self.rand_place_branch()):
+                nodes.append(node)
+            node = (node[0] + x_gap, node[1] + y_gap)
+        return nodes
 
     def rand_place_branch(self):
-        '''uses self.p to decide whether or not to place branches.
+        '''uses self.prob to decide whether or not to place branches.
         Returns true/false.'''
-        pass
+        if random.random() < self.prob:
+            return True
+        else:
+            return False
+
 
     def place_branch(self, node):
         '''instantiates a pair of new branches at the given node.'''
