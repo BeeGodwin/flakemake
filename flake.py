@@ -6,17 +6,18 @@ import numpy
 class Branch:
     '''recursively constructs one arm of a flake. Seed the RNG before you create
     the object if you want branches that look alike.'''
+    
     def __init__(self, ori=(0, 0), vec=(0, -1), leng=100, n=6, dens=10, prob=1):
         self.ori = ori # (x, y) tuple describing pt on scr
         self.vec = vec # (x, y) tuple describing norm vector
         self.leng = leng # length in pixels
         self.dens = dens # nodes are this far apart
         self.prob = prob # 0-1 probability of nodes
-        self.angles = self.get_angles(n)
-
-        # for node in self.place_nodes():
-        #     if self.rand_place_branch():
-        #         self.place_branch(node) # got to place pairs of branches.
+        self.angles = self.get_angles(n) # list of pairs of (x, y) norm vectors
+        self.nodes = self.place_nodes() # list of (x, y) points
+        self.branches = [] # list of lists of Branch objects
+        #for node in self.nodes:
+        #    self.place_branches(node)
 
     def place_nodes(self):
         '''returns a list of (x, y) tuples of points along this branch. dens says
@@ -27,23 +28,29 @@ class Branch:
         x_gap, y_gap = self.vec[0] * self.dens, self.vec[1] * self.dens
         node = (self.ori[0] + x_gap, self.ori[1] + y_gap)
         for i in range((self.leng // self.dens) - 1):
-            if (self.rand_place_branch()):
+            if (self.rand_place()):
                 nodes.append(node)
             node = (node[0] + x_gap, node[1] + y_gap)
         return nodes
 
-    def rand_place_branch(self):
-        '''uses self.prob to decide whether or not to place branches.
+    def rand_place(self):
+        '''uses self.prob to decide whether or not to place branches or nodes.
         Returns true/false.'''
         if random.random() < self.prob:
             return True
         else:
             return False
 
-
-    def place_branch(self, node):
-        '''instantiates a pair of new branches at the given node.'''
-        pass
+    def place_branches(self, node):
+        '''instantiates a pair(s) of new branches at the given node, and returns
+        a list of pairs of branches.'''
+        branches = []
+        if len(self.angles) == 1:
+            pass # place only one pair of branches
+            return
+        for i in range(random.randrange(1, len(self.angles))):
+            pass # place at least one pair
+        return branches
 
     def get_angles(self, n):
         '''returns a list of tuples of (x, y) tuples, describing normalised
