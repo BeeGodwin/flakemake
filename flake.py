@@ -6,18 +6,22 @@ import numpy
 class Branch:
     '''recursively constructs one arm of a flake. Seed the RNG before you create
     the object if you want branches that look alike.'''
-    def __init__(self, ori=(0, 0), vec=(0, -1), leng=100, n=6, dens=1, prob=1):
+    def __init__(self, ori=(0, 0), vec=(0, -1), leng=100, n=6, dens=10, prob=1):
         self.ori = ori # (x, y) tuple describing pt on scr
         self.vec = vec # (x, y) tuple describing norm vector
         self.leng = leng # length in pixels
+        self.dens = dens # nodes are this far apart
+        self.prob = prob # 0-1 probability of nodes
         self.angles = self.get_angles(n)
 
         # for node in self.place_nodes(dens, prob, leng):
         #     if self.rand_place_branch():
-        #         self.place_branch(node)
+        #         self.place_branch(node) # got to place pairs of branches.
 
-    def place_nodes(self, dens, prob, leng):
-        '''returns a list of (x, y) tuples of points along this branch.'''
+    def place_nodes(self):
+        '''returns a list of (x, y) tuples of points along this branch. dens says
+        how many pixels apart nodes should be. prob is the likelihood of a given
+        node being added to the returned list.'''
         pass
 
     def rand_place_branch(self):

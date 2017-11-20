@@ -5,7 +5,15 @@ def test_init():
     pass
 
 def test_create_nodes():
-    pass
+    branch = Branch(leng=30, dens=10, prob=1)
+    nodes = branch.place_nodes()
+    assert nodes == [(0, -10), (0, -20)]
+    branch = Branch(leng=30, dens=15, prob=1)
+    nodes = branch.place_nodes()
+    assert nodes == [(0, -15)]
+    branch = Branch(leng=100, dens=1, prob=0)
+    assert nodes == []
+
 
 def test_rand_place_branch():
     pass
