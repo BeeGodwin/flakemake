@@ -29,15 +29,14 @@ class Branch:
         nodes = []
         x_gap, y_gap = self.vec[0] * self.dens, self.vec[1] * self.dens
         node = (self.ori[0] + x_gap, self.ori[1] + y_gap)
-        for i in range((self.leng // self.dens) - 1):
-            if (self.rand_place()):
+        for i in range(int((self.leng // self.dens)) - 1):
+            if (self.choose()):
                 nodes.append(node)
             node = (node[0] + x_gap, node[1] + y_gap)
         return nodes
 
-    def rand_place(self):
-        '''uses self.prob to decide whether or not to place branches or nodes.
-        Returns true/false.'''
+    def choose(self):
+        '''uses self.prob to choose true/false.'''
         if self.leng < self.dens:
             return False
         if random.random() < self.prob:
@@ -59,13 +58,18 @@ class Branch:
 
     def branch_gen(self, node, angles):
         '''parameterizes & instantiates one pair of new branches.'''
-        sd = random.randrange(0, 10000000)
+        sd = random.randrange(random.getrandbits(32))
         l = self.leng - self.dens
+        d = self.dens
+        if self.choose():
+            l /= 2
+            d /= 2
+        
         random.seed(sd)
-        branch_a = Branch(ori=node, vec=angles[0], leng=l, prob=self.prob, dens=self.dens, n=self.n)
+        branch_a = Branch(ori=node, vec=angles[0], leng=l, prob=self.prob, dens=d, n=self.n)
         #print('New branch at {} with vec {} and leng {}'.format(branch_a.ori, branch_a.vec, branch_a.leng))
         random.seed(sd)
-        branch_b = Branch(ori=node, vec=angles[1], leng=l, prob=self.prob, dens=self.dens, n=self.n)
+        branch_b = Branch(ori=node, vec=angles[1], leng=l, prob=self.prob, dens=d, n=self.n)
         #print('New branch at {} with vec {} and leng {}'.format(branch_b.ori, branch_b.vec, branch_b.leng))
         return [branch_a, branch_b]
 

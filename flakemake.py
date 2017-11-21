@@ -16,7 +16,11 @@ def main():
     DSURF = pygame.display.set_mode((1024, 768))
     pygame.display.set_caption('FlakeMake 0.01a')
     ORIGIN = (512, 384)
-    new_flake(DSURF, ORIGIN, 200, 6, 40, 0.2)
+    n = 6
+    p = 0.2
+    l = 200
+    d = 40
+    new_flake(DSURF, ORIGIN, l, n, 40, p)
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -24,13 +28,33 @@ def main():
                 sys.exit()
             if event.type == KEYDOWN:
                 if event.key == 32:
-                    new_flake(DSURF, ORIGIN, 200, 6, 5, 0.2)
+                    new_flake(DSURF, ORIGIN, l, n, d, p)
+                elif event.key == 97:
+                    n += 1
+                elif event.key == 100:
+                    n -= 1
+                elif event.key == 119:
+                    p += 0.1
+                    p = min(p, 1)
+                elif event.key == 115:
+                    p -= 0.1
+                    p = max(p, 0.1)
+                elif event.key == 101:
+                    l += 10
+                    l = min(l, 300)
+                    d += 2
+                    d = min(d, 60)
+                elif event.key == 113:
+                    l -= 10
+                    l = max(l, 120)
+                    d -= 2
+                    d = max(d, 24)
         pygame.display.update()
 
 def new_flake(DSURF, ORIGIN, l, sides, d, p):
     DSURF.fill((0,0,0))
     angle = 360 / sides
-    seed = random.randrange(0, 1000000)
+    seed = random.randrange(random.getrandbits(32))
 
     for i in range(sides):
         random.seed(seed)
@@ -48,7 +72,6 @@ def flake_depth(branch, count):
         return count
     count += 1
     return flake_depth(branch.branches[0][0], count)
-
 
 if __name__ == '__main__':
     main()
