@@ -13,12 +13,12 @@ class Branch:
         self.leng = leng # length in pixels
         self.dens = dens # nodes are this far apart
         self.prob = prob # 0-1 probability of nodes
-        self.n = n
+        self.n = n # sidedness of snowflake. should this be a class var?
         self.angles = self.get_angles(n) # list of pairs of (x, y) norm vectors
         self.nodes = self.place_nodes() # list of (x, y) points
         self.branches = [] # list of lists of Branch objects
 
-        for node in self.nodes: # breaks the unit test
+        for node in self.nodes:
            self.branches.append(self.place_branches(node))
 
     def place_nodes(self):
