@@ -95,10 +95,3 @@ class Branch:
         x = round(math.sin(math.radians(phi)), 3)
         y = -round(math.cos(math.radians(phi)), 3)
         return (x, y)
-
-# def main():
-#     branch = Branch(ori=(0, 0), vec=(-1, 0), leng=200, n=6, dens=10, prob=1)
-#     print(branch)
-#
-# if __name__ == '__main__':
-#     main()
