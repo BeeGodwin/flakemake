@@ -13,6 +13,7 @@ class Branch:
         self.leng = leng # length in pixels
         self.dens = dens # nodes are this far apart
         self.prob = prob # 0-1 probability of nodes
+        self.n = n
         self.angles = self.get_angles(n) # list of pairs of (x, y) norm vectors
         self.nodes = self.place_nodes() # list of (x, y) points
         self.branches = [] # list of lists of Branch objects
@@ -61,11 +62,11 @@ class Branch:
         sd = random.randrange(0, 10000000)
         l = self.leng - self.dens
         random.seed(sd)
-        branch_a = Branch(ori=node, vec=angles[0], leng=l, prob=self.prob, dens=self.dens)
-        print('New branch at {} with vec {} and leng {}'.format(branch_a.ori, branch_a.vec, branch_a.leng))
+        branch_a = Branch(ori=node, vec=angles[0], leng=l, prob=self.prob, dens=self.dens, n=self.n)
+        #print('New branch at {} with vec {} and leng {}'.format(branch_a.ori, branch_a.vec, branch_a.leng))
         random.seed(sd)
-        branch_b = Branch(ori=node, vec=angles[1], leng=l, prob=self.prob, dens=self.dens)
-        print('New branch at {} with vec {} and leng {}'.format(branch_b.ori, branch_b.vec, branch_b.leng))
+        branch_b = Branch(ori=node, vec=angles[1], leng=l, prob=self.prob, dens=self.dens, n=self.n)
+        #print('New branch at {} with vec {} and leng {}'.format(branch_b.ori, branch_b.vec, branch_b.leng))
         return [branch_a, branch_b]
 
     def get_angles(self, n):

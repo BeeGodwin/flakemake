@@ -1,5 +1,6 @@
 import pygame, sys, math
 from pygame.locals import *
+from flake import Branch
 
 def simple_lines(n, l, ORIGIN, DSURF):
     '''draws the simplest possible snowflake of n lines of length l.'''
@@ -9,34 +10,26 @@ def simple_lines(n, l, ORIGIN, DSURF):
         dest = (ORIGIN[0] + x * l, ORIGIN[1] + y * l)
         pygame.draw.line(DSURF, (255, 255, 255), ORIGIN, dest, 2)
 
+def draw_branch(branch, DSURF):
+    dest_x = branch.ori[0] + (branch.vec[0] * branch.leng)
+    dest_y = branch.ori[1] + (branch.vec[1] * branch.leng)
+    pygame.draw.line(DSURF, (255, 255, 255), branch.ori, (dest_x, dest_y), 2)
+    for pair in branch.branches:
+        for child_branch in pair:
+            draw_branch(child_branch, DSURF)
+
 def main():
     pygame.init()
     DSURF = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('FlakeMake 0.00a')
-
-    BLACK = (0, 0, 0)
-    # or more explicitly: WHITE = pygame.Color(255, 255, 255)
     ORIGIN = (400, 300)
-
-    n = 6
-    l = 200
+    branch = Branch(ori=ORIGIN, leng=150, n=6, dens=30, prob=0.4)
+    draw_branch(branch, DSURF)
     while True:
-        DSURF.fill(BLACK)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == 97:
-                    n += 1
-                elif event.key == 100:
-                    n -= 1
-                elif event.key == 119:
-                    l += 30
-                elif event.key == 115:
-                    l -= 30
-        # n += 1
-        simple_lines(n, l, ORIGIN, DSURF)
         pygame.display.update()
 
 if __name__ == '__main__':
