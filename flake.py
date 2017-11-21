@@ -17,7 +17,7 @@ class Branch:
         self.nodes = self.place_nodes() # list of (x, y) points
         self.branches = [] # list of lists of Branch objects
 
-        for node in self.nodes:
+        for node in self.nodes: # breaks the unit test
            self.branches.append(self.place_branches(node))
 
     def place_nodes(self):

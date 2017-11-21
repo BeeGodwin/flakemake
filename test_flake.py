@@ -26,8 +26,8 @@ def test_rand_place():
 
 def test_place_branch():
     branch = Branch(leng=20, n=4, dens=10, prob=1)
-    assert len(branch.place_branches((0, -10))) == 1
-    assert type(branch.place_branches((0, -10))[0]) == list
+    assert len(branch.place_branches((0, -10))) == 2
+    assert type(branch.place_branches((0, -10))) == list
 
 def test_branch_gen():
     branch = Branch(leng=20, n=4, dens=10, prob=1)
