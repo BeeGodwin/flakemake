@@ -26,7 +26,18 @@ def test_rand_place():
 
 def test_place_branch():
     branch = Branch(leng=20, n=4, dens=10, prob=1)
+    assert len(branch.place_branches((0, -10))) == 1
+    assert type(branch.place_branches((0, -10))[0]) == list
 
+def test_branch_gen():
+    branch = Branch(leng=20, n=4, dens=10, prob=1)
+    node = (0, -10)
+    angles = [(1, 0), (-1, 0)]
+    branch.branches = branch.branch_gen(node, angles)
+    assert len(branch.branches) == 2
+    assert branch.branches[0].leng == 10
+    assert branch.branches[0].vec == (1, 0)
+    assert branch.branches[1].vec == (-1, 0)
 
 def test_get_angles():
     branch = Branch(n=4)

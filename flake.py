@@ -6,8 +6,8 @@ import numpy
 class Branch:
     '''recursively constructs one arm of a flake. Seed the RNG before you create
     the object if you want branches that look alike.'''
-    
-    def __init__(self, ori=(0, 0), vec=(0, -1), leng=100, n=6, dens=10, prob=1):
+
+    def __init__(self, ori=(0, 0), vec=(0, -1), leng=10, n=4, dens=10, prob=1):
         self.ori = ori # (x, y) tuple describing pt on scr
         self.vec = vec # (x, y) tuple describing norm vector
         self.leng = leng # length in pixels
@@ -16,8 +16,9 @@ class Branch:
         self.angles = self.get_angles(n) # list of pairs of (x, y) norm vectors
         self.nodes = self.place_nodes() # list of (x, y) points
         self.branches = [] # list of lists of Branch objects
-        #for node in self.nodes:
-        #    self.place_branches(node)
+
+        for node in self.nodes:
+           self.branches.append(self.place_branches(node))
 
     def place_nodes(self):
         '''returns a list of (x, y) tuples of points along this branch. dens says
@@ -36,6 +37,8 @@ class Branch:
     def rand_place(self):
         '''uses self.prob to decide whether or not to place branches or nodes.
         Returns true/false.'''
+        if self.leng < self.dens:
+            return False
         if random.random() < self.prob:
             return True
         else:
@@ -46,11 +49,24 @@ class Branch:
         a list of pairs of branches.'''
         branches = []
         if len(self.angles) == 1:
-            pass # place only one pair of branches
-            return
-        for i in range(random.randrange(1, len(self.angles))):
-            pass # place at least one pair
+            branches = self.branch_gen(node, self.angles[0])
+            return branches
+        else:
+            j = random.randrange(0, len(self.angles) - 1)
+            branches = self.branch_gen(node, self.angles[j])
         return branches
+
+    def branch_gen(self, node, angles):
+        '''parameterizes & instantiates one pair of new branches.'''
+        sd = random.randrange(0, 10000000)
+        l = self.leng - self.dens
+        random.seed(sd)
+        branch_a = Branch(ori=node, vec=angles[0], leng=l, prob=self.prob, dens=self.dens)
+        print('New branch at {} with vec {} and leng {}'.format(branch_a.ori, branch_a.vec, branch_a.leng))
+        random.seed(sd)
+        branch_b = Branch(ori=node, vec=angles[1], leng=l, prob=self.prob, dens=self.dens)
+        print('New branch at {} with vec {} and leng {}'.format(branch_b.ori, branch_b.vec, branch_b.leng))
+        return [branch_a, branch_b]
 
     def get_angles(self, n):
         '''returns a list of tuples of (x, y) tuples, describing normalised
