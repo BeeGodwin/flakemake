@@ -16,7 +16,7 @@ def main():
     DSURF = pygame.display.set_mode((1024, 768))
     pygame.display.set_caption('FlakeMake 0.01a')
     ORIGIN = (512, 384)
-    new_flake(DSURF, ORIGIN, 250, 6, 50, 0.4)
+    new_flake(DSURF, ORIGIN, 200, 6, 40, 0.2)
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -24,7 +24,7 @@ def main():
                 sys.exit()
             if event.type == KEYDOWN:
                 if event.key == 32:
-                    new_flake(DSURF, ORIGIN, 250, 6, 50, 0.4)
+                    new_flake(DSURF, ORIGIN, 200, 6, 40, 0.2)
         pygame.display.update()
 
 def new_flake(DSURF, ORIGIN, l, sides, d, p):
