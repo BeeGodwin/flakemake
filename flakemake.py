@@ -24,19 +24,31 @@ def main():
                 sys.exit()
             if event.type == KEYDOWN:
                 if event.key == 32:
-                    new_flake(DSURF, ORIGIN, 200, 6, 40, 0.2)
+                    new_flake(DSURF, ORIGIN, 200, 6, 5, 0.2)
         pygame.display.update()
 
 def new_flake(DSURF, ORIGIN, l, sides, d, p):
     DSURF.fill((0,0,0))
     angle = 360 / sides
     seed = random.randrange(0, 1000000)
+
     for i in range(sides):
         random.seed(seed)
         branch_angle = angle * i
         vec_x, vec_y = math.sin(math.radians(branch_angle)), math.cos(math.radians(branch_angle))
         branch = Branch(ori=ORIGIN, vec=(vec_x, vec_y), leng=l, n=sides, dens=d, prob=p)
+        depth = flake_depth(branch, 0)
+        if depth < 3: # NOTE get rid of magic numbers.
+            new_flake(DSURF, ORIGIN, l, sides, d, p)
+            break
         draw_branch(branch, DSURF, 9)
+
+def flake_depth(branch, count):
+    if len(branch.branches) == 0:
+        return count
+    count += 1
+    return flake_depth(branch.branches[0][0], count)
+
 
 if __name__ == '__main__':
     main()
