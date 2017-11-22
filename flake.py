@@ -3,10 +3,11 @@ import random
 import math
 import numpy
 
-# NOTE add a Flake class that encapsulates n Branch objects.
+# TODO add a Flake class that encapsulates n Branch objects.
 # Flake can contain methods to manipulate the whole flake, ie. rotate,
 # change color. Am thinking we probably want to look at numpy and get into the
 # maths a bit?
+
 
 class Branch:
     """recursively constructs one arm of a flake. Seed the RNG before you create
