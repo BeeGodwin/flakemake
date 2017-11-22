@@ -30,8 +30,10 @@ def main():
                     new_flake(DSURF, ORIGIN, l, n, d, p)
                 elif event.key == 97: # a
                     n += 1
+                    n = min(n, 24)
                 elif event.key == 100: # d
                     n -= 1
+                    n = max(n, 3)
                 elif event.key == 119: # w
                     p += 0.05
                     p = min(p, 0.95)
