@@ -13,16 +13,16 @@ def test_create_nodes():
     assert nodes == [(0, -15)]
     branch = Branch(leng=100, dens=1, prob=0)
     nodes = branch.place_nodes()
-    assert nodes == [] # won't work til rand does.
+    assert nodes == []
     branch = Branch(vec=(0, 1), leng=30, dens=15, prob=1)
     nodes = branch.place_nodes()
     assert nodes == [(0, 15)]
 
-def test_rand_place():
+def test_choose():
     branch = Branch(prob=1)
-    assert branch.rand_place() == True
+    assert branch.choose() == True
     branch.prob = 0
-    assert branch.rand_place() == False
+    assert branch.choose() == False
 
 def test_place_branch():
     branch = Branch(leng=20, n=4, dens=10, prob=1)
@@ -35,7 +35,7 @@ def test_branch_gen():
     angles = [(1, 0), (-1, 0)]
     branch.branches = branch.branch_gen(node, angles)
     assert len(branch.branches) == 2
-    assert branch.branches[0].leng == 10
+    assert branch.branches[0].leng == 5
     assert branch.branches[0].vec == (1, 0)
     assert branch.branches[1].vec == (-1, 0)
 
