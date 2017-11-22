@@ -16,10 +16,7 @@ def main():
     DSURF = pygame.display.set_mode((1024, 768))
     pygame.display.set_caption('FlakeMake 0.01a')
     ORIGIN = (512, 384)
-    n = 6
-    p = 0.2
-    l = 200
-    d = 40
+    n, p, l, d = 6, 0.2, 200, 40
     new_flake(DSURF, ORIGIN, l, n, 40, p)
     while True:
         for event in pygame.event.get():
@@ -34,21 +31,21 @@ def main():
                 elif event.key == 100: # d
                     n -= 1
                 elif event.key == 119: # w
-                    p += 0.1
-                    p = min(p, 0.9)
+                    p += 0.05
+                    p = min(p, 0.95)
                 elif event.key == 115: # s
-                    p -= 0.1
-                    p = max(p, 0.1)
+                    p -= 0.05
+                    p = max(p, 0.05)
                 elif event.key == 101: # e
                     l += 10
-                    l = min(l, 300)
+                    l = min(l, 350)
                     d += 2
-                    d = min(d, 60)
+                    d = min(d, 70)
                 elif event.key == 113: # q
                     l -= 10
-                    l = max(l, 120)
+                    l = max(l, 80)
                     d -= 2
-                    d = max(d, 24)
+                    d = max(d, 16)
         pygame.display.update()
 
 def new_flake(DSURF, ORIGIN, l, sides, d, p):
