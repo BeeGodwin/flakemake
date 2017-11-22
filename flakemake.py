@@ -29,22 +29,22 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == 32:
                     new_flake(DSURF, ORIGIN, l, n, d, p)
-                elif event.key == 97:
+                elif event.key == 97: # a
                     n += 1
-                elif event.key == 100:
+                elif event.key == 100: # d
                     n -= 1
-                elif event.key == 119:
+                elif event.key == 119: # w
                     p += 0.1
-                    p = min(p, 1)
-                elif event.key == 115:
+                    p = min(p, 0.9)
+                elif event.key == 115: # s
                     p -= 0.1
                     p = max(p, 0.1)
-                elif event.key == 101:
+                elif event.key == 101: # e
                     l += 10
                     l = min(l, 300)
                     d += 2
                     d = min(d, 60)
-                elif event.key == 113:
+                elif event.key == 113: # q
                     l -= 10
                     l = max(l, 120)
                     d -= 2
