@@ -3,6 +3,8 @@ from pygame.locals import *
 from flake import Branch
 import random
 
+# NOTE need to add some GUI feedback, and to refactor to deal with the Flake obj.
+
 def draw_branch(branch, DSURF, weight):
     dest_x = branch.ori[0] + (branch.vec[0] * branch.leng)
     dest_y = branch.ori[1] + (branch.vec[1] * branch.leng)
@@ -14,7 +16,7 @@ def draw_branch(branch, DSURF, weight):
 def main():
     pygame.init()
     DSURF = pygame.display.set_mode((1024, 768))
-    pygame.display.set_caption('FlakeMake 0.01a')
+    pygame.display.set_caption('FlakeMake 0.02a')
     ORIGIN = (512, 384)
     n, p, l, d = 6, 0.2, 200, 40
     new_flake(DSURF, ORIGIN, l, n, 40, p)
