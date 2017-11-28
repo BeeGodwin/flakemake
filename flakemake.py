@@ -6,29 +6,46 @@ import random
 from flake import Branch
 
 
-# TODO need to add some GUI feedback, and to refactor to deal with the Flake obj.
-# TODO some way of dealing with time, time deltas, and frame rate.
-# TODO rotate stuff.
-# TODO glow.
-# TODO time-drawing effects.
-# TODO color
-
 def draw_branch(branch, dsurf, weight):
-    dest_x = branch.ori[0] + (branch.vec[0] * branch.leng)
-    dest_y = branch.ori[1] + (branch.vec[1] * branch.leng)
-    pygame.draw.line(dsurf, (255, 255, 255), branch.ori, (dest_x, dest_y), weight)
+    """draws a branch, and then recurses thru all child branches."""
+    col_a = (127, 127, 255)
+    col_b = (225, 225, 255)
+    end_x = branch.ori[0] + (branch.vec[0] * branch.leng)
+    end_y = branch.ori[1] + (branch.vec[1] * branch.leng)
+    random.seed(random.getrandbits(32))
+    colour = get_colour(col_a, col_b, random.random())
+    pygame.draw.line(dsurf, colour, branch.ori, (end_x, end_y), weight)
     for pair in branch.branches:
         for child_branch in pair:
-            draw_branch(child_branch, dsurf, weight - 2)
+            draw_branch(child_branch, dsurf, weight - 1)
+
+
+def get_colour(col_a: color, col_b: color, rand=False, t=0.5):
+    """returns a random colour tweened between colA and colB if random, or uses t
+    where 0 >= t >= 1 to find a colour on a gradient between."""
+    if rand:
+        t = random.random()
+    r_a, g_a, b_a = col_a
+    r_b, g_b, b_b = col_b
+    r_delta = tween(r_a, r_b, t)  # change to tween(int, int, t) function.
+    g_delta = tween(g_a, g_b, t)
+    b_delta = tween(b_a, b_b, t)
+    return int(r_delta), int(g_delta), int(b_delta)
+
+
+def tween(a, b, t):
+    if a < b:
+        a, b = b, a
+    return b + (a - b) * t
 
 
 def main():
     pygame.init()
-    dsurf = pygame.display.set_mode((1024, 768))
+    surf = pygame.display.set_mode((1024, 768))
     pygame.display.set_caption('FlakeMake 0.02a')
     origin = (512, 384)
     ln, n, d, p = 200, 6, 40, 0.2
-    new_flake(dsurf, origin, ln, n, d, p)
+    new_flake(surf, origin, ln, n, d, p)
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -36,7 +53,7 @@ def main():
                 sys.exit()
             if event.type == KEYDOWN:
                 if event.key == 32:
-                    new_flake(dsurf, origin, ln, n, d, p)
+                    new_flake(surf, origin, ln, n, d, p)
                 elif event.key == 97:  # a
                     n += 1
                     n = min(n, 24)

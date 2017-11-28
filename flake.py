@@ -64,7 +64,7 @@ class Branch:
         return branches
 
     def branch_gen(self, node, angles):
-        """parameterizes & instantiates one pair of new branches."""
+        """parametrises & instantiates one pair of new branches."""
         sd = random.randrange(random.getrandbits(32))
         _len = self.leng - self.dens
         _den = self.dens

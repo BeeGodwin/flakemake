@@ -1,5 +1,4 @@
 from flake import Branch
-import random, math, numpy
 
 def test_init():
     pass
