@@ -3,11 +3,6 @@ import random
 import math
 import numpy
 
-# TODO add a Flake class that encapsulates n Branch objects.
-# Flake can contain methods to manipulate the whole flake, ie. rotate,
-# change color. Am thinking we probably want to look at numpy and get into the
-# maths a bit?
-
 
 class Branch:
     """recursively constructs one arm of a flake. Seed the RNG before you create
@@ -71,7 +66,6 @@ class Branch:
         if self.choose():
             _len /= 2
             _den /= 2
-
         random.seed(sd)
         branch_a = Branch(ori=node, vec=angles[0], leng=_len, prob=self.prob, dens=_den, n=self.n)
         # print('New branch at {} with vec {} and leng {}'.format(branch_a.ori, branch_a.vec, branch_a.leng))
